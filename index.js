@@ -1,15 +1,16 @@
 require('dotenv').config();
 const { Client, GatewayIntentBits } = require('discord.js');
-const { Configuration, OpenAIApi } = require('openai');
-
-// Configura el cliente de Discord
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+const { OpenAIApi } = require('openai');
 
 // Configura la API de OpenAI
-const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY, // Coloca tu API Key en un archivo .env
+const openai = new OpenAIApi({
+    apiKey: process.env.OPENAI_API_KEY, // Asegúrate de que esta clave esté definida en el archivo .env
 });
-const openai = new OpenAIApi(configuration);
+
+// Configura el cliente de Discord
+const client = new Client({
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
+});
 
 // Cuando el bot esté listo
 client.once('ready', () => {
@@ -35,7 +36,7 @@ client.on('messageCreate', async (message) => {
             const reply = response.data.choices[0].message.content;
             message.reply(reply);
         } catch (error) {
-            console.error('Error al procesar la solicitud:', error);
+            console.error('Error al procesar la solicitud:', error.message);
             message.reply('Lo siento, ocurrió un error procesando tu solicitud.');
         }
     }
