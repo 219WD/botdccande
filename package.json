@@ -13,6 +13,7 @@
   "dependencies": {
     "discord.js": "^14.16.3",
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "node": "^23.5.0",
     "openai": "^4.77.0"
   },
